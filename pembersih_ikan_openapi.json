@@ -1,0 +1,22 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Pembersih Ikan IoT",
+        "version": "1.0.0",
+        "description": "RESTFul API for IoT project called Pembersih Ikan",
+        "contact": {
+            "name": "Arivan Satria",
+            "email": "arivan.gede@gmail.com"
+        },
+        "license": {
+            "name": "APACHE 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "servers": [
+        {"url": "https://api.pembersih-ikan.my.id/api/v1.0"}
+    ],
+    "paths": {
+        
+    }
+}

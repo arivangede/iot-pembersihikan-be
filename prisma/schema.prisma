@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Device {
+  id             String           @id @default(uuid())
+  brand          String
+  model          String
+  os             String
+  os_version     String
+  processor      String
+  ram            Int
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+  PerformanceLog PerformanceLog[]
+}
+
+model FishType {
+  id                String              @id @default(uuid())
+  name              String
+  cleaning_speed    Float
+  created_at        DateTime            @default(now())
+  updated_at        DateTime            @updatedAt
+  CleaningOperation CleaningOperation[]
+}
+
+model CleaningOperation {
+  id         String   @id @default(uuid())
+  fk_fish_id String
+  FishType   FishType @relation(fields: [fk_fish_id], references: [id])
+  start_time DateTime
+  end_time   DateTime
+  status     String
+  created_at DateTime @default(now())
+  Result     Result?
+}
+
+model PerformanceLog {
+  id                  String   @id @default(uuid())
+  framework           String
+  request_time        Float
+  connection_type     String
+  cellular_generation String?
+  fk_device_id        String
+  created_at          DateTime @default(now())
+  Device              Device   @relation(fields: [fk_device_id], references: [id])
+  Result              Result?
+}
+
+model Result {
+  id                      String            @id @default(uuid())
+  fk_performancelog_id    String            @unique
+  fk_cleaningoperation_id String            @unique
+  PerformanceLog          PerformanceLog    @relation(fields: [fk_performancelog_id], references: [id])
+  CleaningOperation       CleaningOperation @relation(fields: [fk_cleaningoperation_id], references: [id])
+  isRead                  Boolean           @default(false)
+  created_at              DateTime          @default(now())
+}
