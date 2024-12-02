@@ -61,7 +61,7 @@ describe("POST /api/devices/register", function () {
       ram: 20,
     });
 
-    expect(result.status).toBe(200);
+    expect(result.status).toBe(201);
     expect(result.body.message).toBe("Device Registered Successfuly");
     expect(result.body.data.id).toBeDefined();
     expect(result.body.data.brand).toBe("Test Brand");
@@ -105,7 +105,7 @@ describe("POST /api/devices/register", function () {
       ram: 20,
     });
 
-    expect(result.status).toBe(200);
+    expect(result.status).toBe(201);
     expect(result.body.message).toBe(
       "This Device Data Is Already Exists, Register New Device Aborted"
     );

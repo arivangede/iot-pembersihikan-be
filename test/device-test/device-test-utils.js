@@ -1,18 +1,16 @@
 import { prisma } from "../../src/utils/database";
 
 export const removeTestDevice = async () => {
-  const testDevice = await prisma.device.findFirst({
+  const testDeviceCount = await prisma.device.count({
     where: {
       brand: "Test Brand",
     },
-    select: {
-      id: true,
-    },
   });
-  if (testDevice) {
-    await prisma.device.delete({
+
+  if (testDeviceCount > 0) {
+    await prisma.device.deleteMany({
       where: {
-        id: testDevice.id,
+        brand: "Test Brand",
       },
     });
   }

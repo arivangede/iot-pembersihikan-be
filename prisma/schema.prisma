@@ -30,6 +30,7 @@ model FishType {
   id                String              @id @default(uuid())
   name              String
   cleaning_speed    Float
+  cleaning_duration Int
   created_at        DateTime            @default(now())
   updated_at        DateTime            @updatedAt
   CleaningOperation CleaningOperation[]
@@ -40,7 +41,7 @@ model CleaningOperation {
   fk_fish_id String
   FishType   FishType @relation(fields: [fk_fish_id], references: [id])
   start_time DateTime
-  end_time   DateTime
+  end_time   DateTime?
   status     String
   created_at DateTime @default(now())
   Result     Result?

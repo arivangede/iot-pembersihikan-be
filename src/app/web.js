@@ -1,9 +1,13 @@
 import express from "express";
-import { router } from "../routes/api.js";
+import { devicesRouter } from "../routes/devices-api.js";
 import { errorMiddleware } from "../middleware/error-middleware.js";
+import { fishTypesRouter } from "../routes/fish-types-api.js";
+import { operationsRouter } from "../routes/operation-api.js";
 
 export const web = express();
 web.use(express.json());
 
-web.use(router);
+web.use(devicesRouter);
+web.use(fishTypesRouter);
+web.use(operationsRouter);
 web.use(errorMiddleware);
