@@ -1,4 +1,4 @@
-import operationService from "../services/operation-service";
+import operationService from "../services/operation-service.js";
 
 const getAllOperations = async (req, res, next) => {
   try {

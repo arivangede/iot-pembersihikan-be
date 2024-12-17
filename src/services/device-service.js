@@ -36,7 +36,6 @@ const register = async (request) => {
         { model: newDevice.model },
         { os: newDevice.os },
         { os_version: newDevice.os_version },
-        { processor: newDevice.processor },
         { ram: newDevice.ram },
       ],
     },
@@ -75,9 +74,6 @@ const update = async (deviceId, request) => {
   }
   if (requestBody.os_version) {
     updateData.os_version = requestBody.os_version;
-  }
-  if (requestBody.processor) {
-    updateData.processor = requestBody.processor;
   }
   if (requestBody.ram) {
     updateData.ram = requestBody.ram;

@@ -1,5 +1,5 @@
 import express from "express";
-import operationController from "../controllers/operation-controller";
+import operationController from "../controllers/operation-controller.js";
 
 export const operationsRouter = new express.Router();
 operationsRouter.get("/api/operations", operationController.getAllOperations);

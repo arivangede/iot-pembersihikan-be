@@ -1,5 +1,5 @@
 import express from "express";
-import fishtypesController from "../controllers/fishtypes-controller";
+import fishtypesController from "../controllers/fishtypes-controller.js";
 
 export const fishTypesRouter = new express.Router();
 fishTypesRouter.get("/api/fish-types", fishtypesController.getAllFishTypes);

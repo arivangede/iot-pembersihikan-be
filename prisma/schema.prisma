@@ -19,7 +19,6 @@ model Device {
   model          String
   os             String
   os_version     String
-  processor      String
   ram            Int
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt

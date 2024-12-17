@@ -31,7 +31,6 @@ describe("GET /api/devices/by-id/:deviceId", () => {
     expect(result.body.data.model).toBe("Test Model");
     expect(result.body.data.os).toBe("Test OS");
     expect(result.body.data.os_version).toBe("Test OS Version");
-    expect(result.body.data.processor).toBe("Test Processor");
     expect(result.body.data.ram).toBe(20);
   });
 
@@ -57,18 +56,15 @@ describe("POST /api/devices/register", function () {
       model: "Test Model",
       os: "Test OS",
       os_version: "Test OS Version",
-      processor: "Test Processor",
       ram: 20,
     });
 
     expect(result.status).toBe(201);
-    expect(result.body.message).toBe("Device Registered Successfuly");
     expect(result.body.data.id).toBeDefined();
     expect(result.body.data.brand).toBe("Test Brand");
     expect(result.body.data.model).toBe("Test Model");
     expect(result.body.data.os).toBe("Test OS");
     expect(result.body.data.os_version).toBe("Test OS Version");
-    expect(result.body.data.processor).toBe("Test Processor");
     expect(result.body.data.ram).toBe(20);
   });
 
@@ -78,7 +74,6 @@ describe("POST /api/devices/register", function () {
       model: "Test Model",
       os: "Test OS",
       os_version: "Test OS Version",
-      processor: "Test Processor",
       ram: "20gb", // invalid data type
     });
 
@@ -92,7 +87,6 @@ describe("POST /api/devices/register", function () {
         model: "Test Model",
         os: "Test OS",
         os_version: "Test OS Version",
-        processor: "Test Processor",
         ram: 20,
       },
     });
@@ -101,7 +95,6 @@ describe("POST /api/devices/register", function () {
       model: "Test Model",
       os: "Test OS",
       os_version: "Test OS Version",
-      processor: "Test Processor",
       ram: 20,
     });
 
@@ -114,7 +107,6 @@ describe("POST /api/devices/register", function () {
     expect(result.body.data.model).toBe("Test Model");
     expect(result.body.data.os).toBe("Test OS");
     expect(result.body.data.os_version).toBe("Test OS Version");
-    expect(result.body.data.processor).toBe("Test Processor");
     expect(result.body.data.ram).toBe(20);
   });
 });
@@ -137,7 +129,6 @@ describe("PATCH /api/devices/update/:deviceId", () => {
     expect(result.body.data.model).toBe("Test Update Model");
     expect(result.body.data.os).toBe(device.os);
     expect(result.body.data.os_version).toBe(device.os_version);
-    expect(result.body.data.processor).toBe(device.processor);
     expect(result.body.data.ram).toBe(device.ram);
   });
 

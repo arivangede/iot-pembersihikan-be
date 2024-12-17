@@ -23,7 +23,6 @@ export const createTestDevice = async () => {
       model: "Test Model",
       os: "Test OS",
       os_version: "Test OS Version",
-      processor: "Test Processor",
       ram: 20,
     },
   });

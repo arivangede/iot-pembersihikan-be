@@ -1,9 +1,9 @@
-import { ResponseError } from "../error/response-error";
-import { prisma } from "../utils/database";
-import { createOperationValidation } from "../validations/operation-validation";
-import { validate } from "../validations/validation";
-import deviceService from "./device-service";
-import fishtypesService from "./fishtypes-service";
+import { ResponseError } from "../error/response-error.js";
+import { prisma } from "../utils/database.js";
+import { createOperationValidation } from "../validations/operation-validation.js";
+import { validate } from "../validations/validation.js";
+import deviceService from "./device-service.js";
+import fishtypesService from "./fishtypes-service.js";
 
 const getAllOperations = async () => {
   const result = await prisma.result.findMany({
