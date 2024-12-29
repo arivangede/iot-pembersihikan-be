@@ -6,8 +6,22 @@ import {
 } from "../validations/fishtype-validation.js";
 import { validate } from "../validations/validation.js";
 
-const getAllFishTypes = async () => {
-  const fishTypes = await prisma.fishType.findMany();
+const getAllFishTypes = async (search = null) => {
+  const query = {
+    orderBy: {
+      name: "asc",
+    },
+  };
+
+  if (search && search !== "") {
+    query.where = {
+      name: {
+        contains: search.toLowerCase(),
+      },
+    };
+  }
+
+  const fishTypes = await prisma.fishType.findMany(query);
 
   return fishTypes;
 };

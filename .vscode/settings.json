@@ -1,0 +1,4 @@
+{
+    "testing.automaticallyOpenTestResults": "openOnTestStart",
+    "jest.runMode": "on-demand"
+}

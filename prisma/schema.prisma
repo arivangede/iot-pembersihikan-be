@@ -19,7 +19,7 @@ model Device {
   model          String
   os             String
   os_version     String
-  ram            Int
+  ram            Float
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
   PerformanceLog PerformanceLog[]

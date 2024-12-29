@@ -2,7 +2,8 @@ import fishtypesService from "../services/fishtypes-service.js";
 
 const getAllFishTypes = async (req, res, next) => {
   try {
-    const result = await fishtypesService.getAllFishTypes();
+    const { search } = req.query;
+    const result = await fishtypesService.getAllFishTypes(search);
 
     const dataLength = result.length;
 
