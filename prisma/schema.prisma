@@ -49,7 +49,6 @@ model CleaningOperation {
 model PerformanceLog {
   id                  String   @id @default(uuid())
   framework           String
-  request_time        Float
   connection_type     String
   cellular_generation String?
   fk_device_id        String

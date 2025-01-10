@@ -123,7 +123,6 @@ const create = async (deviceId, fishId, request) => {
 
   const performanceData = {
     framework: validated.framework,
-    request_time: validated.request_time,
     connection_type: validated.connection_type,
   };
 

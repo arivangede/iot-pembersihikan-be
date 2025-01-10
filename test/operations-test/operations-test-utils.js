@@ -74,7 +74,6 @@ export const createTestOperation = async () => {
   const performance = await prisma.performanceLog.create({
     data: {
       framework: "test",
-      request_time: 2000,
       connection_type: "Wi-Fi",
       fk_device_id: testDevice.id,
     },

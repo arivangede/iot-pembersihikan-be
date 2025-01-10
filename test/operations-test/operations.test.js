@@ -147,7 +147,6 @@ describe("POST /api/operations/:deviceId/:fishId", () => {
     const payload = {
       start_time: "2024-11-29T12:34:56Z",
       framework: "test",
-      request_time: 2000,
       connection_type: "Cellular",
       cellular_generation: "4G",
     };
@@ -167,7 +166,6 @@ describe("POST /api/operations/:deviceId/:fishId", () => {
     const payload = {
       start_time: "2024-11-29T12:34:56Z",
       framework: "test",
-      request_time: 2000,
       connection_type: "Wi-Fi",
     };
 
@@ -180,21 +178,6 @@ describe("POST /api/operations/:deviceId/:fishId", () => {
     expect(result.body.data).toBeInstanceOf(Object);
 
     await removeTestOperations(result.body.data.id);
-  });
-
-  it("should not create new operation when data is not valid", async () => {
-    const payload = {
-      start_time: "2024-11-29T12:34:56Z",
-      framework: "test",
-      request_time: "2000avc",
-      connection_type: "Wi-Fi",
-    };
-
-    const result = await supertest(web)
-      .post(`/api/operations/${testDevice.id}/${testFish.id}`)
-      .send(payload);
-
-    expect(result.status).toBe(400);
   });
 });
 
