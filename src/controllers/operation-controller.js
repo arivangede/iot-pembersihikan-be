@@ -60,6 +60,16 @@ const getProcessingOperation = async (req, res, next) => {
   }
 };
 
+const readCleanLog = async (req, res, next) => {
+  try {
+    const { operationId } = req.params;
+    const result = await operationService.readCleanLog(operationId);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const create = async (req, res, next) => {
   try {
     const { deviceId, fishId } = req.params;
@@ -91,6 +101,7 @@ export default {
   forceStopCleanProcess,
   finishedCleanProcess,
   getProcessingOperation,
+  readCleanLog,
   create,
   remove,
 };

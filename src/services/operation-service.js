@@ -8,8 +8,19 @@ import fishtypesService from "./fishtypes-service.js";
 const getAllOperations = async () => {
   const result = await prisma.result.findMany({
     include: {
-      CleaningOperation: true,
-      PerformanceLog: true,
+      CleaningOperation: {
+        include: {
+          FishType: true,
+        },
+      },
+      PerformanceLog: {
+        include: {
+          Device: true,
+        },
+      },
+    },
+    orderBy: {
+      created_at: "desc",
     },
   });
 
@@ -22,8 +33,16 @@ const getOperationDetailsById = async (operationId) => {
       id: operationId,
     },
     include: {
-      CleaningOperation: true,
-      PerformanceLog: true,
+      CleaningOperation: {
+        include: {
+          FishType: true,
+        },
+      },
+      PerformanceLog: {
+        include: {
+          Device: true,
+        },
+      },
     },
   });
 
@@ -108,6 +127,21 @@ const finishedCleanProcess = async (processId) => {
   };
 };
 
+const readCleanLog = async (operationId) => {
+  const operation = await getOperationDetailsById(operationId);
+
+  await prisma.result.update({
+    where: {
+      id: operation.id,
+    },
+    data: {
+      isRead: true,
+    },
+  });
+
+  return { message: "Read status updated successfully" };
+};
+
 const create = async (deviceId, fishId, request) => {
   const validated = await validate(createOperationValidation, request);
   const fish = await fishtypesService.getFishTypeDataById(fishId);
@@ -186,6 +220,7 @@ export default {
   getProcessingOperation,
   forceStopCleanProcess,
   finishedCleanProcess,
+  readCleanLog,
   create,
   remove,
 };

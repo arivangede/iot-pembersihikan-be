@@ -19,6 +19,10 @@ operationsRouter.get(
   "/api/operations/finish/:processId",
   operationController.finishedCleanProcess
 );
+operationsRouter.get(
+  "/api/operations/read/:operationId",
+  operationController.readCleanLog
+);
 operationsRouter.post(
   "/api/operations/:deviceId/:fishId",
   operationController.create
