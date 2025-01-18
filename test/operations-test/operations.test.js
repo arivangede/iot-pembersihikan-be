@@ -130,6 +130,36 @@ describe("GET /api/operations/finish/:processId", () => {
   });
 });
 
+describe("GET /api/opertations/read/:operationId", () => {
+  let testOperation;
+
+  beforeEach(async () => {
+    testOperation = await createTestOperation();
+  });
+
+  afterEach(async () => {
+    await removeTestOperations(testOperation.id);
+  });
+
+  it("should can read clean log data", async () => {
+    const result = await supertest(web).get(
+      `/api/operations/read/${testOperation.id}`
+    );
+
+    expect(result.status).toBe(200);
+    expect(result.body.message).toBe("Read status updated successfully");
+  });
+
+  it("should can not read clean log data when operationId is not correct", async () => {
+    const result = await supertest(web).get(
+      `/api/operations/read/${testOperation.id + "wrongid"}`
+    );
+
+    expect(result.status).toBe(404);
+    expect(result.body.message).toBe("There is no result data found");
+  });
+});
+
 describe("POST /api/operations/:deviceId/:fishId", () => {
   let testDevice, testFish;
 
@@ -179,6 +209,24 @@ describe("POST /api/operations/:deviceId/:fishId", () => {
 
     await removeTestOperations(result.body.data.id);
   });
+
+  it("should can not create new operation if there is another operation on process", async () => {
+    const testOperation = await createTestOperation();
+    const payload = {
+      start_time: "2024-11-29T12:34:56Z",
+      framework: "test",
+      connection_type: "Wi-Fi",
+    };
+
+    const result = await supertest(web)
+      .post(`/api/operations/${testDevice.id}/${testFish.id}`)
+      .send(payload);
+
+    expect(result.status).toBe(400);
+    expect(result.body.message).toBe("There is another process on progress");
+
+    await removeTestOperations(testOperation.id);
+  });
 });
 
 describe("DELETE /api/operations/remove/:operationId", () => {
@@ -186,6 +234,11 @@ describe("DELETE /api/operations/remove/:operationId", () => {
 
   beforeEach(async () => {
     testOperation = await createTestOperation();
+  });
+
+  afterEach(async () => {
+    await removeTestDevice();
+    await removeTestFishes();
   });
 
   it("should can remove operation data", async () => {

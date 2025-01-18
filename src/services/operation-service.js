@@ -143,6 +143,12 @@ const readCleanLog = async (operationId) => {
 };
 
 const create = async (deviceId, fishId, request) => {
+  const isAnotherProcessing = await checkProcessingOperation();
+
+  if (isAnotherProcessing) {
+    throw new ResponseError(400, "There is another process on progress");
+  }
+
   const validated = await validate(createOperationValidation, request);
   const fish = await fishtypesService.getFishTypeDataById(fishId);
   const device = await deviceService.getDevicesById(deviceId);
@@ -212,6 +218,16 @@ const remove = async (operationId) => {
   return {
     message: "Operation Log Data Successfully Removed",
   };
+};
+
+const checkProcessingOperation = async () => {
+  const result = await prisma.cleaningOperation.findMany({
+    where: {
+      status: "Processing",
+    },
+  });
+
+  return result.length > 0;
 };
 
 export default {
