@@ -12,7 +12,11 @@ operationsRouter.get(
   operationController.getOperationDetailsById
 );
 operationsRouter.get(
-  "/api/operations/force-stop/:operationId",
+  "/api/operations/status/:processId",
+  operationController.getProcessStatus
+);
+operationsRouter.get(
+  "/api/operations/force-stop/:processId",
   operationController.forceStopCleanProcess
 );
 operationsRouter.get(

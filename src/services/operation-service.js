@@ -53,6 +53,28 @@ const getOperationDetailsById = async (operationId) => {
   return result;
 };
 
+const getProcessStatus = async (processId) => {
+  const process = await prisma.cleaningOperation.findFirst({
+    where: {
+      id: processId,
+    },
+  });
+
+  if (!process) {
+    throw new ResponseError(
+      404,
+      "There is no processing operation with the given ID"
+    );
+  }
+
+  const result = process.status;
+
+  return {
+    message: "successfully get process status",
+    status: result,
+  };
+};
+
 const getProcessingOperation = async () => {
   const result = await prisma.cleaningOperation.findMany({
     where: {
@@ -81,12 +103,24 @@ const getProcessingOperation = async () => {
   };
 };
 
-const forceStopCleanProcess = async (operationId) => {
-  const operation = await getOperationDetailsById(operationId);
-
-  const process = await prisma.cleaningOperation.update({
+const forceStopCleanProcess = async (processId) => {
+  const process = await prisma.cleaningOperation.findFirst({
     where: {
-      id: operation.CleaningOperation.id,
+      id: processId,
+      status: "Processing",
+    },
+  });
+
+  if (!process) {
+    throw new ResponseError(
+      404,
+      "There is no processing operation with the given ID"
+    );
+  }
+
+  const result = await prisma.cleaningOperation.update({
+    where: {
+      id: processId,
     },
     data: {
       end_time: new Date(),
@@ -96,7 +130,7 @@ const forceStopCleanProcess = async (operationId) => {
 
   return {
     message: "Clean operation successfully stopped",
-    data: process,
+    data: result,
   };
 };
 
@@ -104,6 +138,7 @@ const finishedCleanProcess = async (processId) => {
   const process = await prisma.cleaningOperation.findFirst({
     where: {
       id: processId,
+      status: "Processing",
     },
   });
 
@@ -233,6 +268,7 @@ const checkProcessingOperation = async () => {
 export default {
   getAllOperations,
   getOperationDetailsById,
+  getProcessStatus,
   getProcessingOperation,
   forceStopCleanProcess,
   finishedCleanProcess,

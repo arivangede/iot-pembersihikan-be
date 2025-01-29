@@ -29,10 +29,21 @@ const getOperationDetailsById = async (req, res, next) => {
   }
 };
 
+const getProcessStatus = async (req, res, next) => {
+  try {
+    const { processId } = req.params;
+    const result = await operationService.getProcessStatus(processId);
+
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const forceStopCleanProcess = async (req, res, next) => {
   try {
-    const { operationId } = req.params;
-    const result = await operationService.forceStopCleanProcess(operationId);
+    const { processId } = req.params;
+    const result = await operationService.forceStopCleanProcess(processId);
 
     res.status(200).json(result);
   } catch (error) {
@@ -98,6 +109,7 @@ const remove = async (req, res, next) => {
 export default {
   getAllOperations,
   getOperationDetailsById,
+  getProcessStatus,
   forceStopCleanProcess,
   finishedCleanProcess,
   getProcessingOperation,

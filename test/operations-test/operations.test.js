@@ -84,7 +84,28 @@ describe("GET /api/operations/:operationId", () => {
   });
 });
 
-describe("GET /api/operations/force-stop/:operationId", () => {
+describe("GET /api/operations/status/:processId", () => {
+  let testOperation;
+
+  beforeEach(async () => {
+    testOperation = await createTestOperation();
+  });
+
+  afterEach(async () => {
+    await removeTestOperations(testOperation.id);
+  });
+
+  it("should can get process status", async () => {
+    const result = await supertest(web).get(
+      `/api/operations/status/${testOperation.CleaningOperation.id}`
+    );
+
+    expect(result.status).toBe(200);
+    expect(result.body.message).toBe("successfully get process status");
+  });
+});
+
+describe("GET /api/operations/force-stop/:process_id", () => {
   let testOperation;
 
   beforeEach(async () => {
@@ -97,7 +118,7 @@ describe("GET /api/operations/force-stop/:operationId", () => {
 
   it("should can force stop clean operation", async () => {
     const result = await supertest(web).get(
-      `/api/operations/force-stop/${testOperation.id}`
+      `/api/operations/force-stop/${testOperation.CleaningOperation.id}`
     );
 
     expect(result.status).toBe(200);
