@@ -5,6 +5,6 @@ import dotenv from "dotenv";
 dotenv.config();
 const PORT = process.env.PORT;
 
-web.listen(PORT, () => {
+web.listen(PORT, "0.0.0.0", () => {
   logger.info(`App Started | PORT: ${PORT}`);
 });
